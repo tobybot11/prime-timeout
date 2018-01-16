@@ -1,0 +1,9 @@
+[package]
+name = "prime-timeout"
+version = "0.1.0"
+authors = ["Tobias Ford <toby.ford@pobox.com>"]
+
+[dependencies]
+futures = "*"
+futures-cpupool = "*"
+tokio-timer = "0.1"
