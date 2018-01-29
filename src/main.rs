@@ -18,7 +18,7 @@ fn main() {
     let timer = Timer::default();
 
     // a future that resolves to Err after a timeout
-    let timeout = timer.sleep(Duration::from_millis(750))
+    let timeout = timer.sleep(Duration::from_millis(1037))
          .then(|_| Err(()));
 
     // a future that resolves to Ok with the primality result
