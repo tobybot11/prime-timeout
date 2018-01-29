@@ -4,8 +4,8 @@ extern crate tokio_timer;
 
 // use std::time::Duration;
 
-// use futures::Future;
-// use futures_cpupool::CpuPool;
+use futures::Future;
+use futures_cpupool::CpuPool;
 // use tokio_timer::Timer;
 
 const BIG_PRIME: u64 = 15485867;
@@ -13,7 +13,8 @@ const BIG_PRIME: u64 = 15485867;
 
 // Synchronous version
 fn main() {
-    // let pool = CpuPool::new_num_cpus();
+    // setup thread pool
+    let pool = CpuPool::new_num_cpus();
     // let timer = Timer::default();
 
     // a future that resolves to Err after a timeout
@@ -37,27 +38,22 @@ fn main() {
     // }
 
     // spawn our computation, getting back a *future* of the answer
-    // let prime_future = pool.spawn_fn(|| {
-    //   let prime = is_prime(BIG_PRIME);
+    let prime_future = pool.spawn_fn(|| {
+        let prime = is_prime(BIG_PRIME);
 
     // For reasons we'll see later, we need to return a Result here
-    // let res: Result<bool, ()> = Ok(prime);
-    //         res
-    //   });
+        let res: Result<bool, ()> = Ok(prime);
 
-    // println!("Created the future");
+        res
+    });
+
+    println!("Created the future.. but we must wait on it.. ");
 
     // unwrap here since we know the result is Ok
-    //     if prime_future.wait().unwrap() {
-    //       println!("Prime");
-    // } else {
-    //   println!("Not prime");
-    // }
-
-    if is_prime(BIG_PRIME) {
-        println!("Prime!");
+    if prime_future.wait().unwrap() {
+        println!("Prime");
     } else {
-        println!("Not Prime");
+        println!("Not prime");
     }
 }
 
