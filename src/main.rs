@@ -1,3 +1,4 @@
+#![feature(core_intrinsics)]
 extern crate futures;
 extern crate futures_cpupool;
 extern crate tokio_timer;
@@ -7,6 +8,11 @@ use std::time::Duration;
 use futures::Future;
 use futures_cpupool::CpuPool;
 use tokio_timer::Timer;
+
+//  meant for debugging/development branch
+fn print_type_of<T>(_: &T) {
+     println!("{}", unsafe { std::intrinsics::type_name::<T>() });
+}
 
 const BIG_PRIME: u64 = 15485867;
 // const BIG_PRIME: u64 = 15485868;
@@ -28,7 +34,12 @@ fn main() {
 
     // a future that resolves to one of the above values -- whichever
     // completes first!
-    let winner = timeout.select(prime).map(|(win, _)| win);
+    let winner = timeout.select(prime).map(|(win, _)| {
+//        print_type_of(&lose);
+        println!("winner is [{:?}] loser is []", win);
+
+        win
+    });
 
     // now block until we have a winner, then print what happened
     match winner.wait() {
