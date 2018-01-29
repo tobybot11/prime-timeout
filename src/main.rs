@@ -2,14 +2,14 @@ extern crate futures;
 extern crate futures_cpupool;
 extern crate tokio_timer;
 
-use std::time::Duration;
+// use std::time::Duration;
 
-use futures::Future;
-use futures_cpupool::CpuPool;
-use tokio_timer::Timer;
+// use futures::Future;
+// use futures_cpupool::CpuPool;
+// use tokio_timer::Timer;
 
-// const BIG_PRIME: u64 = 15485867;
-const BIG_PRIME: u64 = 15485868;
+const BIG_PRIME: u64 = 15485867;
+// const BIG_PRIME: u64 = 15485868;
 
 // Synchronous version
 fn main() {
